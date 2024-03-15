@@ -88,14 +88,14 @@ const SubmitPayment: FC = () => {
 }
 
 const PaypalPaymentForm: FC = () => {
-  const [clientIdToken, setClientIdToken] = useState<{
+  const [clientIdToken, _] = useState<{
     clientId: string
     clientToken: string
   }>({
     clientId:
-      'ARaWEnoT5x8LwQeu7Vw5t0m2UvCeLAnld-vRhVZ6N9PztOaVsgCQhK1IEypOl9iAPdHkDoC3IMSqSE7q',
+      'AVJn6pJEIFjs2StqKNSN3nzzniDaXDZVewkR60Dy3GfgvlNtpqJwfOdRwPyz7_EEbZybPJ-tiAvVHu8M',
     clientToken:
-      'eyJicmFpbnRyZWUiOnsiYXV0aG9yaXphdGlvbkZpbmdlcnByaW50IjoiOGQzZTIwMTVkYzRlOWFhNDY1OTc0ZTU3NzQ5YjM2MWU4MzliZmM0MTIyZGZlOGIwM2E1ZTc4OTk0OTZjMTRkMnxtZXJjaGFudF9pZD1yd3dua3FnMnhnNTZobTJuJnB1YmxpY19rZXk9NjNrdm4zN3Z0MjlxYjRkZiZjcmVhdGVkX2F0PTIwMjQtMDMtMTVUMTA6NDY6NDUuOTQ2WiIsInZlcnNpb24iOiIzLXBheXBhbCJ9LCJwYXlwYWwiOnsiaWRUb2tlbiI6bnVsbCwiYWNjZXNzVG9rZW4iOiJBMjFBQUxWbXM5Rm9ULXNVVXNyWE9iUldXU21GclVjb0t0WDZ1TzFTOVVHc25vcVZ1dXNtWlVMNGdycEVtUUtGM0d1RjEtOUpYNnZiaFpyV09Pb0t3bVltaS1HZUtuV3VRIn19'
+      'eyJicmFpbnRyZWUiOnsiYXV0aG9yaXphdGlvbkZpbmdlcnByaW50IjoiOWQyYWIxMTIwNWU3MTE2YjVhZjBkOTU1NzdhMDE3MzJiZWQ3MTJlODg1OWIzZmYxNjM4Y2E2MWZmNzVhNWUzMXxtZXJjaGFudF9pZD1yd3dua3FnMnhnNTZobTJuJnB1YmxpY19rZXk9NjNrdm4zN3Z0MjlxYjRkZiZjcmVhdGVkX2F0PTIwMjQtMDMtMTVUMTE6MDc6MDcuODU2WiIsInZlcnNpb24iOiIzLXBheXBhbCJ9LCJwYXlwYWwiOnsiaWRUb2tlbiI6bnVsbCwiYWNjZXNzVG9rZW4iOiJBMjFBQUtQYWNtdXM4bWtwYVJiSkdnSWdhNW5zUjk1V0pHaThFVk95WE41MHh0TG92cFZ1c1ZWd2wxQ0xkaTVDR2hJNWxnVVBnVzhoNnVPLV9Odnh4SjdFTVg5bHo3MGNBIn19'
   })
 
   useEffect(() => {
