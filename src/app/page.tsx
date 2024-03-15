@@ -4,39 +4,37 @@ import {
   PayPalHostedField,
   PayPalHostedFieldsProvider,
   PayPalScriptProvider,
-  usePayPalHostedFields,
-} from "@paypal/react-paypal-js";
-import { useRouter } from "next/router";
-import { FC, useEffect, useRef, useState } from "react";
-import Image from "next/image";
+  usePayPalHostedFields
+} from '@paypal/react-paypal-js'
+import { FC, useEffect, useRef, useState } from 'react'
 
 const SubmitPayment: FC = () => {
-  const [paying, setPaying] = useState(false);
-  const cardHolderName = useRef(null);
-  const hostedField = usePayPalHostedFields();
+  const [paying, setPaying] = useState(false)
+  const cardHolderName = useRef(null)
+  const hostedField = usePayPalHostedFields()
 
   const handleClick = () => {
     if (!hostedField?.cardFields) {
       const childErrorMessage =
-        "Unable to find any child components in the <PayPalHostedFieldsProvider />";
+        'Unable to find any child components in the <PayPalHostedFieldsProvider />'
 
-      throw new Error(childErrorMessage);
+      throw new Error(childErrorMessage)
     }
 
-    setPaying(true);
+    setPaying(true)
 
     hostedField.cardFields
       .submit({
-        cardholderName: (cardHolderName?.current as any)?.value,
+        cardholderName: (cardHolderName?.current as any)?.value
       })
-      .then((data) => {
-        console.log(data);
+      .then(data => {
+        console.log(data)
       })
-      .catch((err) => {
-        console.error(err);
-        setPaying(false);
-      });
-  };
+      .catch(err => {
+        console.error(err)
+        setPaying(false)
+      })
+  }
 
   return (
     <>
@@ -53,7 +51,7 @@ const SubmitPayment: FC = () => {
           id="card-holder"
           ref={cardHolderName}
           className="card-field h-12 border px-2 "
-          style={{ outline: "none" }}
+          style={{ outline: 'none' }}
           type="text"
           placeholder="Full name"
         />
@@ -75,24 +73,32 @@ const SubmitPayment: FC = () => {
       <button
         aria-label="pay"
         className={`${
-          paying ? "" : " btn-primary"
+          paying ? '' : ' btn-primary'
         } bg-secondary mt-4 block w-full rounded-md px-8 py-2 text-white`}
         onClick={handleClick}
       >
         {paying ? (
           <div className="loader h-6 w-6 rounded-full border-4 border-t-4 border-gray-200 ease-linear"></div>
         ) : (
-          "Pay"
+          'Pay'
         )}
       </button>
     </>
-  );
-};
+  )
+}
 
 const PaypalPaymentForm: FC = () => {
+  const [clientIdToken, setClientIdToken] = useState<{
+    clientId: string
+    clientToken: string
+  }>({
+    clientId:
+      'ARaWEnoT5x8LwQeu7Vw5t0m2UvCeLAnld-vRhVZ6N9PztOaVsgCQhK1IEypOl9iAPdHkDoC3IMSqSE7q',
+    clientToken:
+      'eyJicmFpbnRyZWUiOnsiYXV0aG9yaXphdGlvbkZpbmdlcnByaW50IjoiOGQzZTIwMTVkYzRlOWFhNDY1OTc0ZTU3NzQ5YjM2MWU4MzliZmM0MTIyZGZlOGIwM2E1ZTc4OTk0OTZjMTRkMnxtZXJjaGFudF9pZD1yd3dua3FnMnhnNTZobTJuJnB1YmxpY19rZXk9NjNrdm4zN3Z0MjlxYjRkZiZjcmVhdGVkX2F0PTIwMjQtMDMtMTVUMTA6NDY6NDUuOTQ2WiIsInZlcnNpb24iOiIzLXBheXBhbCJ9LCJwYXlwYWwiOnsiaWRUb2tlbiI6bnVsbCwiYWNjZXNzVG9rZW4iOiJBMjFBQUxWbXM5Rm9ULXNVVXNyWE9iUldXU21GclVjb0t0WDZ1TzFTOVVHc25vcVZ1dXNtWlVMNGdycEVtUUtGM0d1RjEtOUpYNnZiaFpyV09Pb0t3bVltaS1HZUtuV3VRIn19'
+  })
 
   useEffect(() => {
-
     const fn = async () => {
       const w = window as any
       if (
@@ -202,7 +208,7 @@ const PaypalPaymentForm: FC = () => {
             await fetch(`/api/orders/${id}/capture`, {
               method: 'POST'
             })
-            
+
             session.completePayment({
               status: (window as any).ApplePaySession.STATUS_SUCCESS
             })
@@ -227,14 +233,14 @@ const PaypalPaymentForm: FC = () => {
     }
   }, [])
 
-  return (
+  return clientIdToken?.clientId && clientIdToken.clientToken ? (
     <PayPalScriptProvider
       options={{
-        clientId: "AVJn6pJEIFjs2StqKNSN3nzzniDaXDZVewkR60Dy3GfgvlNtpqJwfOdRwPyz7_EEbZybPJ-tiAvVHu8M",
-        dataClientToken: "eyJicmFpbnRyZWUiOnsiYXV0aG9yaXphdGlvbkZpbmdlcnByaW50IjoiNWNiNGE2MTExZWM2NDM5YTA1MWE0NmNhYzg1NjQwMWZlOTY2ZDcyZjVlNDhlZWY5MWFjMDgwZTYwNTliYTZkNnxtZXJjaGFudF9pZD1yd3dua3FnMnhnNTZobTJuJnB1YmxpY19rZXk9NjNrdm4zN3Z0MjlxYjRkZiZjcmVhdGVkX2F0PTIwMjQtMDMtMTVUMDk6NTk6MTQuOTA3WiIsInZlcnNpb24iOiIzLXBheXBhbCJ9LCJwYXlwYWwiOnsiaWRUb2tlbiI6bnVsbCwiYWNjZXNzVG9rZW4iOiJBMjFBQUstRTBLWmg2U0YxcDhpZmVFZHZ6Szd3a0IzNUFxeGgyZzBvZUpiMlZnZXVYWUhXWHZqM1Q5WU9DdW5TQmlTRUttY3lUWUNQUHd1SEdTY0NBM0VnNXZCSlI5MUx3In19",
-        intent: "authorize",
+        clientId: clientIdToken.clientId,
+        dataClientToken: clientIdToken.clientToken,
+        intent: 'authorize',
         vault: true,
-        components: "buttons,hosted-fields,applepay",
+        components: 'buttons,hosted-fields,applepay'
       }}
     >
       <div className="text-2xl font-semibold">Payment Method</div>
@@ -244,11 +250,11 @@ const PaypalPaymentForm: FC = () => {
         <div className="">
           <PayPalHostedFieldsProvider
             styles={{
-              ".valid": { color: "#28a745" },
-              ".invalid": { color: "#dc3545" },
-              input: { "font-family": "monospace", "font-size": "16px" },
+              '.valid': { color: '#28a745' },
+              '.invalid': { color: '#dc3545' },
+              input: { 'font-family': 'monospace', 'font-size': '16px' }
             }}
-            createOrder={async() =>
+            createOrder={async () =>
               // checkoutFunction(
               //   "card",
               //   (document.getElementById("saveCardCheck") as any).checked,
@@ -263,7 +269,9 @@ const PaypalPaymentForm: FC = () => {
               //     console.error(err);
               //     throw err;
               //   })
-              {return ''}
+              {
+                return ''
+              }
             }
           >
             <div id="paypal-divs-tohide">
@@ -279,8 +287,8 @@ const PaypalPaymentForm: FC = () => {
                 className="card-field"
                 hostedFieldType="number"
                 options={{
-                  selector: "#card-number",
-                  placeholder: "4111 1111 1111 1111",
+                  selector: '#card-number',
+                  placeholder: '4111 1111 1111 1111'
                 }}
               />
               <div className="flex gap-3">
@@ -297,8 +305,8 @@ const PaypalPaymentForm: FC = () => {
                     className="card-field"
                     hostedFieldType="expirationDate"
                     options={{
-                      selector: "#expiration-date",
-                      placeholder: "MM/YYYY",
+                      selector: '#expiration-date',
+                      placeholder: 'MM/YYYY'
                     }}
                   />
                 </div>
@@ -315,9 +323,9 @@ const PaypalPaymentForm: FC = () => {
                     className="card-field"
                     hostedFieldType="cvv"
                     options={{
-                      selector: "#cvv",
-                      placeholder: "123",
-                      maskInput: true,
+                      selector: '#cvv',
+                      placeholder: '123',
+                      maskInput: true
                     }}
                   />
                 </div>
@@ -331,17 +339,19 @@ const PaypalPaymentForm: FC = () => {
           <div className="w-full px-4 pt-4">
             <PayPalButtons
               createOrder={async () => {
-                return "";
+                return ''
               }}
-              onApprove={async (data) => {
-                console.log(data);
+              onApprove={async data => {
+                console.log(data)
               }}
             />
           </div>
         </div>
       </div>
     </PayPalScriptProvider>
-  );
-};
+  ) : (
+    <span>Loading...</span>
+  )
+}
 
-export default PaypalPaymentForm;
+export default PaypalPaymentForm
