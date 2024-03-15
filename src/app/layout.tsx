@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,6 +17,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+      <Script
+          id="applepay"
+          strategy="lazyOnload"
+          src="https://applepay.cdn-apple.com/jsapi/v1/apple-pay-sdk.js"
+        ></Script>
+      </head>
       <body className={inter.className}>{children}</body>
     </html>
   );
