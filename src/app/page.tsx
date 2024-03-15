@@ -226,11 +226,12 @@ const PaypalPaymentForm: FC = () => {
       clearTimeout(timeout)
     }
   }, [])
+
   return (
     <PayPalScriptProvider
       options={{
-        clientId: "ARaWEnoT5x8LwQeu7Vw5t0m2UvCeLAnld-vRhVZ6N9PztOaVsgCQhK1IEypOl9iAPdHkDoC3IMSqSE7q",
-        dataClientToken: "eyJicmFpbnRyZWUiOnsiYXV0aG9yaXphdGlvbkZpbmdlcnByaW50IjoiNDk2OWVjYzUzNTY2YjhmZWUyMmI2NmY3ZWZiMGM2YjRkOGRjYzQ0NDAyZDE0ZjQ0M2ZkNDk1NzY3N2NiMjllZXxtZXJjaGFudF9pZD1yd3dua3FnMnhnNTZobTJuJnB1YmxpY19rZXk9NjNrdm4zN3Z0MjlxYjRkZiZjcmVhdGVkX2F0PTIwMjQtMDMtMTVUMDk6MzM6MjMuMzMyWiIsInZlcnNpb24iOiIzLXBheXBhbCJ9LCJwYXlwYWwiOnsiaWRUb2tlbiI6bnVsbCwiYWNjZXNzVG9rZW4iOiJBMjFBQUtzUzhpRGdrbkQtYnp1Z3YxUmdBdEFEX0JjVGl4cEY5TDhFZjl6b2d3REdMQlhrOGU5cXYzYUEtNFlkWkozQTkwOGpuVzFpRXYzVk4tQ2lHSWxCenhtblZXcklRIn19",
+        clientId: "AVJn6pJEIFjs2StqKNSN3nzzniDaXDZVewkR60Dy3GfgvlNtpqJwfOdRwPyz7_EEbZybPJ-tiAvVHu8M",
+        dataClientToken: "eyJicmFpbnRyZWUiOnsiYXV0aG9yaXphdGlvbkZpbmdlcnByaW50IjoiNWNiNGE2MTExZWM2NDM5YTA1MWE0NmNhYzg1NjQwMWZlOTY2ZDcyZjVlNDhlZWY5MWFjMDgwZTYwNTliYTZkNnxtZXJjaGFudF9pZD1yd3dua3FnMnhnNTZobTJuJnB1YmxpY19rZXk9NjNrdm4zN3Z0MjlxYjRkZiZjcmVhdGVkX2F0PTIwMjQtMDMtMTVUMDk6NTk6MTQuOTA3WiIsInZlcnNpb24iOiIzLXBheXBhbCJ9LCJwYXlwYWwiOnsiaWRUb2tlbiI6bnVsbCwiYWNjZXNzVG9rZW4iOiJBMjFBQUstRTBLWmg2U0YxcDhpZmVFZHZ6Szd3a0IzNUFxeGgyZzBvZUpiMlZnZXVYWUhXWHZqM1Q5WU9DdW5TQmlTRUttY3lUWUNQUHd1SEdTY0NBM0VnNXZCSlI5MUx3In19",
         intent: "authorize",
         vault: true,
         components: "buttons,hosted-fields,applepay",
