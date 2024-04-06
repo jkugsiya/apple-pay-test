@@ -152,7 +152,7 @@ const PaypalPaymentForm: FC = () => {
           }
         };
 
-        const session = new w.ApplePaySession(14, paymentRequest);
+        const session = new w.ApplePaySession(4, paymentRequest);
 
         session.onvalidatemerchant = (event: any) => {
           applepay
