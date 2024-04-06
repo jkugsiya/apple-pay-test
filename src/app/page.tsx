@@ -150,7 +150,7 @@ const PaypalPaymentForm: FC = () => {
           }
         };
 
-        const session = new w.ApplePaySession(4, paymentRequest);
+        const session = new w.ApplePaySession(14, paymentRequest);
 
         session.onvalidatemerchant = (event: any) => {
           applepay
@@ -195,6 +195,11 @@ const PaypalPaymentForm: FC = () => {
             /**
              * Confirm Payment
              */
+            console.log({
+              orderId: id,
+              token: event.payment.token,
+              billingContact: event.payment.billingContact
+            });
             const confirmOrderResponse = await applepay.confirmOrder({
               orderId: id,
               token: event.payment.token,
