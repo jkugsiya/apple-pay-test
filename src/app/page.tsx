@@ -238,7 +238,7 @@ const PaypalPaymentForm: FC = () => {
       options={{
         clientId: clientIdToken.clientId,
         dataClientToken: clientIdToken.clientToken,
-        intent: 'authorize',
+        intent: 'capture',
         vault: true,
         components: 'buttons,hosted-fields,applepay'
       }}
