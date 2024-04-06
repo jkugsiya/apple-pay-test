@@ -240,7 +240,8 @@ const PaypalPaymentForm: FC = () => {
         dataClientToken: clientIdToken.clientToken,
         intent: 'capture',
         vault: true,
-        components: 'buttons,hosted-fields,applepay'
+        components: 'buttons,hosted-fields,applepay',
+        merchantId: '6NXFRUDV562CQ'
       }}
     >
       <div className="text-2xl font-semibold">Payment Method</div>
