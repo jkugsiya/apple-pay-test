@@ -52,15 +52,15 @@ export async function POST(request: Request) {
               value: '10'
             }
           }
-        ],
-        payment_source: {
-          apple_pay: {
-            experience_context: {
-              return_url: 'https://apple-pay-test-ten.vercel.app/',
-              cancel_url: 'https://apple-pay-test-ten.vercel.app/'
-            }
-          }
-        }
+        ]
+        // payment_source: {
+        //   apple_pay: {
+        //     experience_context: {
+        //       return_url: 'https://apple-pay-test-ten.vercel.app/',
+        //       cancel_url: 'https://apple-pay-test-ten.vercel.app/'
+        //     }
+        //   }
+        // }
       }
     };
 
