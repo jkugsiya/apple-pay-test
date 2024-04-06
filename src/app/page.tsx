@@ -8,6 +8,8 @@ import {
 } from '@paypal/react-paypal-js';
 import { FC, useEffect, useRef, useState } from 'react';
 
+const merchantId = process.env.NEXT_PUBLIC_PAYPAL_MERCHANT_ID;
+
 const SubmitPayment: FC = () => {
   const [paying, setPaying] = useState(false);
   const cardHolderName = useRef(null);
@@ -246,7 +248,7 @@ const PaypalPaymentForm: FC = () => {
         intent: 'capture',
         vault: true,
         components: 'buttons,hosted-fields,applepay',
-        merchantId: '6NXFRUDV562CQ'
+        merchantId: merchantId
       }}
     >
       <div className="text-2xl font-semibold">Payment Method</div>

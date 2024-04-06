@@ -1,8 +1,6 @@
 async function generateAccessToken() {
-  const clientId =
-    'AVJn6pJEIFjs2StqKNSN3nzzniDaXDZVewkR60Dy3GfgvlNtpqJwfOdRwPyz7_EEbZybPJ-tiAvVHu8M';
-  const clientSecret =
-    'EJ8Txre-4Kd3Akx0JuG6doFtcMDqbvWdIDQXNLikd9NB3cX3Plb29uQAIJXC9sxCmhuLfk0ds_ph_XhY';
+  const clientId = process.env.PAYPAL_CLIENT_ID;
+  const clientSecret = process.env.PAYPAL_CLIENT_SECRET;
 
   const path = 'https://api-m.sandbox.paypal.com/v1/oauth2/token';
   const now = Date.now();
