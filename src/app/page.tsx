@@ -141,7 +141,7 @@ const PaypalPaymentForm: FC = () => {
           currencyCode: 'USD',
           merchantCapabilities,
           supportedNetworks,
-          requiredBillingContactFields: [],
+          requiredBillingContactFields: ['postalAddress'],
           requiredShippingContactFields: [],
           total: {
             label: 'Demo (Card is not charged)',
