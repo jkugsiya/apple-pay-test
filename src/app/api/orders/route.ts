@@ -71,10 +71,10 @@ export async function POST(request: Request) {
     });
     const json = await res.json();
 
-    return {
+    return Response.json({
       id: json.id as string,
       paymentLink: json.links?.find((l: any) => l.rel === 'payer-action')?.href
-    };
+    });
   } catch (e) {
     throw e;
   }
