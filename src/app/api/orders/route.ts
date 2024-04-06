@@ -44,7 +44,7 @@ export async function POST(request: Request) {
       url: path,
       headers: headers,
       body: {
-        intent: 'AUTHORIZE',
+        intent: 'CAPTURE',
         purchase_units: [
           {
             amount: {
