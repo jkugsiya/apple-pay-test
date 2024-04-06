@@ -1,40 +1,40 @@
-'use client'
+'use client';
 import {
   PayPalButtons,
   PayPalHostedField,
   PayPalHostedFieldsProvider,
   PayPalScriptProvider,
   usePayPalHostedFields
-} from '@paypal/react-paypal-js'
-import { FC, useEffect, useRef, useState } from 'react'
+} from '@paypal/react-paypal-js';
+import { FC, useEffect, useRef, useState } from 'react';
 
 const SubmitPayment: FC = () => {
-  const [paying, setPaying] = useState(false)
-  const cardHolderName = useRef(null)
-  const hostedField = usePayPalHostedFields()
+  const [paying, setPaying] = useState(false);
+  const cardHolderName = useRef(null);
+  const hostedField = usePayPalHostedFields();
 
   const handleClick = () => {
     if (!hostedField?.cardFields) {
       const childErrorMessage =
-        'Unable to find any child components in the <PayPalHostedFieldsProvider />'
+        'Unable to find any child components in the <PayPalHostedFieldsProvider />';
 
-      throw new Error(childErrorMessage)
+      throw new Error(childErrorMessage);
     }
 
-    setPaying(true)
+    setPaying(true);
 
     hostedField.cardFields
       .submit({
         cardholderName: (cardHolderName?.current as any)?.value
       })
       .then(data => {
-        console.log(data)
+        console.log(data);
       })
       .catch(err => {
-        console.error(err)
-        setPaying(false)
-      })
-  }
+        console.error(err);
+        setPaying(false);
+      });
+  };
 
   return (
     <>
@@ -84,23 +84,23 @@ const SubmitPayment: FC = () => {
         )}
       </button>
     </>
-  )
-}
+  );
+};
 
 const PaypalPaymentForm: FC = () => {
   const [clientIdToken, _] = useState<{
-    clientId: string
-    clientToken: string
+    clientId: string;
+    clientToken: string;
   }>({
     clientId:
       'AVJn6pJEIFjs2StqKNSN3nzzniDaXDZVewkR60Dy3GfgvlNtpqJwfOdRwPyz7_EEbZybPJ-tiAvVHu8M',
     clientToken:
       'eyJicmFpbnRyZWUiOnsiYXV0aG9yaXphdGlvbkZpbmdlcnByaW50IjoiOWQyYWIxMTIwNWU3MTE2YjVhZjBkOTU1NzdhMDE3MzJiZWQ3MTJlODg1OWIzZmYxNjM4Y2E2MWZmNzVhNWUzMXxtZXJjaGFudF9pZD1yd3dua3FnMnhnNTZobTJuJnB1YmxpY19rZXk9NjNrdm4zN3Z0MjlxYjRkZiZjcmVhdGVkX2F0PTIwMjQtMDMtMTVUMTE6MDc6MDcuODU2WiIsInZlcnNpb24iOiIzLXBheXBhbCJ9LCJwYXlwYWwiOnsiaWRUb2tlbiI6bnVsbCwiYWNjZXNzVG9rZW4iOiJBMjFBQUtQYWNtdXM4bWtwYVJiSkdnSWdhNW5zUjk1V0pHaThFVk95WE41MHh0TG92cFZ1c1ZWd2wxQ0xkaTVDR2hJNWxnVVBnVzhoNnVPLV9Odnh4SjdFTVg5bHo3MGNBIn19'
-  })
+  });
 
   useEffect(() => {
     const fn = async () => {
-      const w = window as any
+      const w = window as any;
       if (
         !(
           w.ApplePaySession &&
@@ -108,17 +108,17 @@ const PaypalPaymentForm: FC = () => {
           w.ApplePaySession.canMakePayments()
         )
       )
-        return
+        return;
 
-      console.log('setup applepay')
-      const applepay = w.paypal.Applepay()
+      console.log('setup applepay');
+      const applepay = w.paypal.Applepay();
       const {
         isEligible,
         countryCode,
         currencyCode,
         merchantCapabilities,
         supportedNetworks
-      } = await applepay.config()
+      } = await applepay.config();
 
       console.log({
         isEligible,
@@ -126,14 +126,14 @@ const PaypalPaymentForm: FC = () => {
         currencyCode,
         merchantCapabilities,
         supportedNetworks
-      })
+      });
 
       if (!isEligible) {
-        throw new Error('applepay is not eligible')
+        throw new Error('applepay is not eligible');
       }
 
       document.getElementById('applepay-container')!.innerHTML =
-        '<apple-pay-button id="applepay-btn" buttonstyle="black" type="buy" locale="en">'
+        '<apple-pay-button id="applepay-btn" buttonstyle="black" type="buy" locale="en">';
 
       document.getElementById('applepay-btn')!.addEventListener('click', () => {
         const paymentRequest = {
@@ -148,9 +148,9 @@ const PaypalPaymentForm: FC = () => {
             amount: '10.00',
             type: 'final'
           }
-        }
+        };
 
-        const session = new w.ApplePaySession(4, paymentRequest)
+        const session = new w.ApplePaySession(4, paymentRequest);
 
         session.onvalidatemerchant = (event: any) => {
           applepay
@@ -158,27 +158,27 @@ const PaypalPaymentForm: FC = () => {
               validationUrl: event.validationURL
             })
             .then((payload: any) => {
-              session.completeMerchantValidation(payload.merchantSession)
+              session.completeMerchantValidation(payload.merchantSession);
             })
             .catch((err: any) => {
-              console.error(err)
-              session.abort()
-            })
-        }
+              console.error(err);
+              session.abort();
+            });
+        };
 
         session.onpaymentmethodselected = () => {
           session.completePaymentMethodSelection({
             newTotal: paymentRequest.total
-          })
-        }
+          });
+        };
 
         session.oncancel = () => {
-          console.log('Apple Pay Cancelled!!')
-        }
+          console.log('Apple Pay Cancelled!!');
+        };
 
         session.onpaymentauthorized = async (event: any) => {
-          console.log(event)
-          console.log('Done Apple Pay!')
+          console.log(event);
+          console.log('Done Apple Pay!');
           try {
             /* Create Order on the Server Side */
             const orderResponse = await fetch(`/api/orders`, {
@@ -186,52 +186,52 @@ const PaypalPaymentForm: FC = () => {
               headers: {
                 'Content-Type': 'application/json'
               }
-            })
+            });
             if (!orderResponse.ok) {
-              throw new Error('error creating order')
+              throw new Error('error creating order');
             }
 
-            const { id } = await orderResponse.json()
+            const { id } = await orderResponse.json();
             /**
              * Confirm Payment
              */
-            await applepay.confirmOrder({
+            const confirmOrderResponse = await applepay.confirmOrder({
               orderId: id,
               token: event.payment.token,
-              billingContact: event.payment.billingContact,
-              shippingContact: event.payment.shippingContact
-            })
-
+              billingContact: event.payment.billingContact
+            });
+            console.log(confirmOrderResponse);
             /*
              * Capture order (must currently be made on server)
              */
-            await fetch(`/api/orders/${id}/capture`, {
-              method: 'POST'
-            })
+            console.log('Done Confirm order');
+            // await fetch(`/api/orders/${id}/capture`, {
+            //   method: 'POST'
+            // });
 
             session.completePayment({
               status: (window as any).ApplePaySession.STATUS_SUCCESS
-            })
+            });
           } catch (err) {
-            console.error(err)
+            console.error(err);
             session.completePayment({
               status: (window as any).ApplePaySession.STATUS_FAILURE
-            })
+            });
           }
-        }
+        };
 
-        session.begin()
-      })
-    }
+        session.begin();
+      });
+    };
 
     const timeout = setTimeout(() => {
-      fn()
-    }, 1000)
+      fn();
+    }, 1000);
 
     return () => {
-      clearTimeout(timeout)
-    }
-  }, [])
+      clearTimeout(timeout);
+    };
+  }, []);
 
   return clientIdToken?.clientId && clientIdToken.clientToken ? (
     <PayPalScriptProvider
@@ -270,7 +270,7 @@ const PaypalPaymentForm: FC = () => {
               //     throw err;
               //   })
               {
-                return ''
+                return '';
               }
             }
           >
@@ -339,10 +339,10 @@ const PaypalPaymentForm: FC = () => {
           <div className="w-full px-4 pt-4">
             <PayPalButtons
               createOrder={async () => {
-                return ''
+                return '';
               }}
               onApprove={async data => {
-                console.log(data)
+                console.log(data);
               }}
             />
           </div>
@@ -351,7 +351,7 @@ const PaypalPaymentForm: FC = () => {
     </PayPalScriptProvider>
   ) : (
     <span>Loading...</span>
-  )
-}
+  );
+};
 
-export default PaypalPaymentForm
+export default PaypalPaymentForm;
